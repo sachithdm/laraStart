@@ -88,17 +88,17 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="fas fa-circle nav-icon"></i>
-                    <p>Active Page</p>
-                  </a>
+                  <router-link to="/users" class="nav-link">
+                    <i class="fas fa-users nav-icon blue"></i>
+                    <p>Users</p>
+                  </router-link>
                 </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
+                <!-- <li class="nav-item">
+                  <router-link to="#" class="nav-link">
                     <i class="fas fa-circle nav-icon"></i>
                     <p>Inactive Page</p>
-                  </a>
-                </li>
+                  </router-link>
+                </li> -->
               </ul>
             </li>
 
