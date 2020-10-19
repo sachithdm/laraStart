@@ -75,9 +75,10 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          
+
+          <form @submit.prevent="createUser"> <!-- @keydown="form.onKeydown($event)" -->
           <div class="modal-body">
-            
+           
             <div class="form-group">
               <input v-model="form.name" type="text" name="name" placeholder="Name" class="form-control"
                 :class="{ 'is-invalid': form.errors.has('name') }" />
@@ -115,6 +116,8 @@
               <has-error :form="form" field="password"></has-error>
             </div>
 
+           
+
           </div>
 
           <div class="modal-footer">
@@ -123,6 +126,7 @@
             </button>
             <button type="button" class="btn btn-primary">Create</button>
           </div>
+          </form>
         </div>
       </div>
     </div>
@@ -142,6 +146,11 @@ export default {
         photo: "",
       }),
     };
+  },
+  methods: {
+    createUser(){
+      this.form.post('api/user');
+    }
   },
   mounted() {
     console.log("Component mounted.");
