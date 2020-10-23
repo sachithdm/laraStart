@@ -140,6 +140,7 @@
 
           <!-- component matched by the route will render here -->
           <router-view></router-view>
+          <vue-progress-bar></vue-progress-bar>
 
         </div><!-- /.container-fluid -->
       </div>
