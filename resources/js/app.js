@@ -63,6 +63,9 @@ let routes = [
   Vue.filter('myDate',function(created){
     return moment(created).format("MMM Do YY");;
   });
+
+  window.Fire = new Vue();
+
   
 /**
  * The following block of code may be used to automatically register your

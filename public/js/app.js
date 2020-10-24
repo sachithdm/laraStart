@@ -2001,7 +2001,9 @@ __webpack_require__.r(__webpack_exports__);
     createUser: function createUser() {
       //Start Progress Bar
       this.$Progress.start();
-      this.form.post("api/user"); //Hide Add New User Modal
+      this.form.post("api/user"); //Refresh Table after create new
+
+      Fire.$emit('AfterCreate'); //Hide Add New User Modal
 
       $('#addNew').modal('hide'); //Show sweetalert
 
@@ -2016,10 +2018,13 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this2 = this;
 
-    this.loadUsers();
-    setInterval(function () {
-      return _this2.loadUsers();
-    }, 3000); //update the table in every 3 seconds
+    this.loadUsers(); //update the table in every 3 seconds
+    //setInterval(() => this.loadUsers(),3000);
+    //Update table after create new
+
+    Fire.$on('AfterCreate', function () {
+      _this2.loadUsers();
+    });
   }
 });
 
@@ -79499,6 +79504,7 @@ Vue.filter('myDate', function (created) {
   return moment__WEBPACK_IMPORTED_MODULE_0___default()(created).format("MMM Do YY");
   ;
 });
+window.Fire = new Vue();
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

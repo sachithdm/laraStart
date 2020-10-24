@@ -184,6 +184,10 @@ export default {
       this.$Progress.start();
       this.form.post("api/user");
 
+      //Refresh Table after create new
+      Fire.$emit('AfterCreate');
+
+
       //Hide Add New User Modal
       $('#addNew').modal('hide');
 
@@ -200,8 +204,13 @@ export default {
   },
   created() {
     this.loadUsers();
-    setInterval(() => this.loadUsers(),3000);
     //update the table in every 3 seconds
+    //setInterval(() => this.loadUsers(),3000);
+    //Update table after create new
+    Fire.$on('AfterCreate',() => {
+      this.loadUsers();
+    });
+    
   },
 };
 </script>
