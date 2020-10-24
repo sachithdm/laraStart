@@ -200,6 +200,8 @@ export default {
   },
   created() {
     this.loadUsers();
+    setInterval(() => this.loadUsers(),3000);
+    //update the table in every 3 seconds
   },
 };
 </script>
