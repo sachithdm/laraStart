@@ -1999,31 +1999,35 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     createUser: function createUser() {
+      var _this2 = this;
+
       //Start Progress Bar
       this.$Progress.start();
-      this.form.post("api/user"); //Refresh Table after create new
+      this.form.post("api/user").then(function () {
+        //Refresh Table after create new
+        Fire.$emit("AfterCreate"); //Hide Add New User Modal
 
-      Fire.$emit('AfterCreate'); //Hide Add New User Modal
+        $("#addNew").modal("hide"); //Show sweetalert
 
-      $('#addNew').modal('hide'); //Show sweetalert
+        toast.fire({
+          icon: "success",
+          title: "User Created successfully"
+        }); // End Sweet Alert
 
-      toast.fire({
-        icon: "success",
-        title: "User Created successfully"
-      }); // End Sweet Alert
+        _this2.$Progress.finish(); //End Progress Bar
 
-      this.$Progress.finish(); //End Progress Bar
+      })["catch"](function () {});
     }
   },
   created: function created() {
-    var _this2 = this;
+    var _this3 = this;
 
     this.loadUsers(); //update the table in every 3 seconds
     //setInterval(() => this.loadUsers(),3000);
     //Update table after create new
 
-    Fire.$on('AfterCreate', function () {
-      _this2.loadUsers();
+    Fire.$on("AfterCreate", function () {
+      _this3.loadUsers();
     });
   }
 });

@@ -182,24 +182,24 @@ export default {
     createUser() {
       //Start Progress Bar
       this.$Progress.start();
-      this.form.post("api/user");
+      this.form.post("api/user")
+        .then(() => {
+          //Refresh Table after create new
+          Fire.$emit("AfterCreate");
+          //Hide Add New User Modal
+          $("#addNew").modal("hide");
+          //Show sweetalert
+          toast.fire({
+            icon: "success",
+            title: "User Created successfully",
+          });
+          // End Sweet Alert
+          this.$Progress.finish();
+          //End Progress Bar
+        })
+        .catch(() => {
 
-      //Refresh Table after create new
-      Fire.$emit('AfterCreate');
-
-
-      //Hide Add New User Modal
-      $('#addNew').modal('hide');
-
-      //Show sweetalert
-      toast.fire({
-        icon: "success",
-        title: "User Created successfully",
-      });
-      // End Sweet Alert
-
-      this.$Progress.finish();
-      //End Progress Bar
+        })
     },
   },
   created() {
@@ -207,10 +207,9 @@ export default {
     //update the table in every 3 seconds
     //setInterval(() => this.loadUsers(),3000);
     //Update table after create new
-    Fire.$on('AfterCreate',() => {
+    Fire.$on("AfterCreate", () => {
       this.loadUsers();
     });
-    
   },
 };
 </script>
