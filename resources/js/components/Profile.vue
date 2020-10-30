@@ -93,8 +93,9 @@
                         v-model="form.name"
                         class="form-control"
                         id="inputName"
-                        placeholder="Name"
+                        placeholder="Name" :class="{ 'is-invalid': form.errors.has('name') }"
                       />
+                      <has-error :form="form" field="name"></has-error>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -105,10 +106,11 @@
                       <input
                         type="email"
                         v-model="form.email"
-                        class="form-control"
+                        class="form-control" 
                         id="inputEmail"
-                        placeholder="Email"
+                        placeholder="Email" :class="{ 'is-invalid': form.errors.has('email') }"
                       />
+                      <has-error :form="form" field="email"></has-error>
                     </div>
                   </div>
 
@@ -149,8 +151,9 @@
                         v-model="form.password"
                         class="form-control"
                         id="inputPassport"
-                        placeholder="Passport"
+                        placeholder="Passport" :class="{ 'is-invalid': form.errors.has('password') }"
                       />
+                      <has-error :form="form" field="password"></has-error>
                     </div>
                   </div>
 
