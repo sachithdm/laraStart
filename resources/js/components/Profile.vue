@@ -89,7 +89,8 @@
                     >
                     <div class="col-sm-12">
                       <input
-                        type="email"
+                        type="text"
+                        v-model="form.name"
                         class="form-control"
                         id="inputName"
                         placeholder="Name"
@@ -97,12 +98,13 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="inputEmail" class="col-sm-12 col-form-label"
+                    <label for="inputEmail" class="col-sm-12 control-label"
                       >Email</label
                     >
                     <div class="col-sm-12">
                       <input
                         type="email"
+                        v-model="form.email"
                         class="form-control"
                         id="inputEmail"
                         placeholder="Email"
@@ -111,9 +113,7 @@
                   </div>
 
                   <div class="form-group row">
-                    <label
-                      for="inputExperience"
-                      class="col-sm-12 col-form-label"
+                    <label for="inputExperience" class="col-sm-2 control-label"
                       >Experience</label
                     >
                     <div class="col-sm-12">
@@ -145,7 +145,8 @@
                     >
                     <div class="col-sm-12">
                       <input
-                        type="text"
+                        type="password"
+                        v-model="form.password"
                         class="form-control"
                         id="inputPassport"
                         placeholder="Passport"
@@ -155,7 +156,11 @@
 
                   <div class="form-group row">
                     <div class="col-sm-offset-2 col-sm-12">
-                      <button type="submit" class="btn btn-success">
+                      <button
+                        @click.prevent="updateInfo"
+                        type="submit"
+                        class="btn btn-success"
+                      >
                         Update
                       </button>
                     </div>
@@ -176,8 +181,64 @@
 
 <script>
 export default {
+  data() {
+    return {
+      form: new Form({
+        id: "",
+        name: "",
+        email: "",
+        password: "",
+        type: "",
+        bio: "",
+        photo: "",
+      }),
+    };
+  },
   mounted() {
     console.log("Component mounted.");
+  },
+
+  methods: {
+    updateInfo() {
+      this.$Progress.start();
+      this.form
+        .put("api/profile/")
+        .then(() => {
+          this.$Progress.finish();
+        })
+        .catch(() => {
+          this.$Progress.fail();
+        });
+    },
+
+    updateProfile(e) {
+      //console.log("Uploading");
+      let file = e.target.files[0];
+
+      //echo file information
+      console.log(file);
+
+      let reader = new FileReader();
+      //let vm = this;
+
+      if (file["size"] < 2111775) {
+        reader.onloadend = (file) => {
+          //console.log('RESULT',reader.result)
+          this.form.photo = reader.result;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "You are uploading a large file",
+        })
+      }
+    }
+  },
+
+  created() {
+    axios.get("api/profile").then(({ data }) => this.form.fill(data));
   },
 };
 </script>
