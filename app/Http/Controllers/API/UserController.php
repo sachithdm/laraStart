@@ -64,8 +64,7 @@ class UserController extends Controller
             'name' => 'required|string|max:191',
             'email' => 'required|string|email|max:191|unique:users,email,'.$user->id,
             'password' => 'sometimes|required|min:6'
-        ]);
-        
+        ]);        
 
         //Get Current Profile Photo Name
         $currentPhoto = $user->photo;
@@ -79,6 +78,12 @@ class UserController extends Controller
             //
             $request->merge(['photo' => $name]);
             
+            //Get Current Image Location
+            $userPhoto = public_path('img/profile/').$currentPhoto;
+            //delete old file if exists
+            if(file_exists($userPhoto)){
+                @unlink($userPhoto);
+            }
         }  
 
         //check password is availbale then encrypt
