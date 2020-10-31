@@ -24,7 +24,11 @@
             <h5 class="widget-user-desc text-left">Web Designer</h5>
           </div>
           <div class="widget-user-image">
-            <img class="img-circle" :src="getProfilePhoto()" alt="User Avatar" />
+            <img
+              class="img-circle"
+              :src="getProfilePhoto()"
+              alt="User Avatar"
+            />
           </div>
           <div class="card-footer">
             <div class="row">
@@ -93,7 +97,8 @@
                         v-model="form.name"
                         class="form-control"
                         id="inputName"
-                        placeholder="Name" :class="{ 'is-invalid': form.errors.has('name') }"
+                        placeholder="Name"
+                        :class="{ 'is-invalid': form.errors.has('name') }"
                       />
                       <has-error :form="form" field="name"></has-error>
                     </div>
@@ -106,9 +111,10 @@
                       <input
                         type="email"
                         v-model="form.email"
-                        class="form-control" 
+                        class="form-control"
                         id="inputEmail"
-                        placeholder="Email" :class="{ 'is-invalid': form.errors.has('email') }"
+                        placeholder="Email"
+                        :class="{ 'is-invalid': form.errors.has('email') }"
                       />
                       <has-error :form="form" field="email"></has-error>
                     </div>
@@ -151,7 +157,8 @@
                         v-model="form.password"
                         class="form-control"
                         id="inputPassport"
-                        placeholder="Passport" :class="{ 'is-invalid': form.errors.has('password') }"
+                        placeholder="Passport"
+                        :class="{ 'is-invalid': form.errors.has('password') }"
                       />
                       <has-error :form="form" field="password"></has-error>
                     </div>
@@ -202,15 +209,18 @@ export default {
   },
 
   methods: {
-    getProfilePhoto(){
-      return "img/profile/"+ this.form.photo;
+    getProfilePhoto() {
+      let photo = this.form.photo.length > 200 ? this.form.photo : "/img/profile/" + this.form.photo;
+      return photo;
+      // let prefix = this.form.photo.match(/\//) ? "" : "/img/profile/";
+      // return prefix + this.form.photo;
     },
 
     updateInfo() {
       this.$Progress.start();
-      this.form
-        .put("api/profile/")
+      this.form.put("api/profile/")
         .then(() => {
+          Fire.$emit('AfterCreate');
           this.$Progress.finish();
         })
         .catch(() => {
@@ -239,9 +249,9 @@ export default {
           icon: "error",
           title: "Oops...",
           text: "You are uploading a large file",
-        })
+        });
       }
-    }
+    },
   },
 
   created() {
