@@ -76,7 +76,8 @@
                 </p>
               </router-link>
             </li>
-
+            
+            @can('isAdmin')
             <li class="nav-item has-treeview">
               <!--  menu-open -->
               <a href="#" class="nav-link">
@@ -102,7 +103,7 @@
               </ul>
             </li>
 
-            @can('isAdmin')
+            
             <li class="nav-item">
               <router-link to="/developer" class="nav-link">
                 <i class="nav-icon fas fa-cogs"></i>
@@ -170,6 +171,13 @@
     </footer>
   </div>
   <!-- ./wrapper -->
+
+  @auth
+  <script>
+     window.user = @json(auth()->user())
+  </script>    
+  @endauth
+
 
   <script src="/js/app.js"></script>
 

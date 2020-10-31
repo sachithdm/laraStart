@@ -14,6 +14,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api');
+        //$this->authorize('isAdmin');
+        
     }
 
     /**
@@ -23,7 +25,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::latest()->paginate(20);
+        return User::latest()->paginate(50);
     }
 
     /**
@@ -137,6 +139,8 @@ class UserController extends Controller
         return ['message' => 'update the user info'];
     }
 
+
+
     /**
      * Remove the specified resource from storage.
      *
@@ -145,6 +149,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('isAdmin');
+
         $user = User::findOrFail($id);
         //delete the user
         $user->delete();
