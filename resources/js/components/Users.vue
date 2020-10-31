@@ -56,6 +56,10 @@
       </div>
     </div>
 
+    <div v-if="!$gate.isAdmin()">
+      <not-found></not-found>
+    </div>
+
 
 
     <!-- Modal to add and Edit Users -->
