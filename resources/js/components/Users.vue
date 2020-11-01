@@ -189,7 +189,7 @@ export default {
   data() {
     return {
       editmode: false,
-      users : {},
+      users: {},
       form: new Form({
         id: "",
         name: "",
@@ -203,8 +203,7 @@ export default {
   },
   methods: {
     getResults(page = 1) {
-      axios.get('api/user?page=' + page)
-      .then(response => {
+      axios.get("api/user?page=" + page).then((response) => {
         this.users = response.data;
       });
     },
@@ -304,6 +303,17 @@ export default {
     },
   },
   created() {
+     Fire.$on('searching',() => {
+       let query = this.$parent.search;
+       axios.get('api/findUser?q=' + query)
+       .then((data) => {
+          this.users = data.data
+       })
+       .catch(() => {
+
+       })
+     })
+    
     this.loadUsers();
     //update the table in every 3 seconds
     //setInterval(() => this.loadUsers(),3000);
