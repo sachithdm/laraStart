@@ -84176,10 +84176,9 @@ var app = new Vue({
     search: ''
   },
   methods: {
-    searchit: function searchit() {
-      //console.log("searching. .");
+    searchit: _.debounce(function () {
       Fire.$emit('searching');
-    }
+    }, 1000)
   }
 });
 
