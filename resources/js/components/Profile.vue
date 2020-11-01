@@ -20,8 +20,8 @@
             class="widget-user-header text-white"
             style="background-image: url('./img/user-cover.png')"
           >
-            <h3 class="widget-user-username text-left">Elizabeth Pierce</h3>
-            <h5 class="widget-user-desc text-left">Web Designer</h5>
+            <h3 class="widget-user-username text-left">{{this.form.name}}</h3>
+            <h5 class="widget-user-desc text-left">{{this.form.type}}</h5>
           </div>
           <div class="widget-user-image">
             <img
